@@ -4,13 +4,12 @@ import com.edigest.journalApp.entity.JourneyEntry;
 import com.edigest.journalApp.service.JournalEntryService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/journal")
@@ -22,37 +21,65 @@ public class JourneyEntryControllerV2 {
     Map<String, JourneyEntry> journalEntries = new HashMap<String, JourneyEntry>();
 
     @PostMapping("/addEntry")
-    public JourneyEntry createEntry(@RequestBody JourneyEntry j){
-        j.setDate(LocalDateTime.now());
-        journalEntryService.saveEntry(j);
-        return j;
+    public ResponseEntity<JourneyEntry> createEntry(@RequestBody JourneyEntry j){
+        try{
+            j.setDate(LocalDateTime.now());
+            journalEntryService.saveEntry(j);
+            return new ResponseEntity<>(j,HttpStatus.CREATED);
+
+        }catch(Exception e){
+            return new ResponseEntity<>(j, HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @GetMapping("/getAllEntries")
-    public List<JourneyEntry> finAllEntry(){
+    public ResponseEntity<List<JourneyEntry>> finAllEntry(){
+        try{
+            List<JourneyEntry> j = journalEntryService.getAll();
+            return  new ResponseEntity<>(j,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
 
-        return  journalEntryService.getAll();
     }
 
     // PathVariable is when input is along api url eg journal/getEntry/id/2
     // Request Parameter is when input is with ? in url/Params eg journal/getEntry/id?id=2
     @GetMapping("/getEntry/id/{myId}")
-    public JourneyEntry getEntry(@PathVariable ObjectId myId){
-        return journalEntryService.getEntryById(myId).orElse(null);
+    public ResponseEntity<JourneyEntry> getEntry(@PathVariable ObjectId myId){
+        try{
+            Optional<JourneyEntry> obj = journalEntryService.getEntryById(myId);
+            if(obj.isPresent()){
+                return new ResponseEntity<>(obj.get(),HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
 
-
-
     @PutMapping("/editEntry/{myId}")
-    public void updateJournalEntry(@PathVariable ObjectId myId,@RequestBody JourneyEntry req){
-        journalEntryService.updateEntry(myId,req);
+    public ResponseEntity<JourneyEntry> updateJournalEntry(@PathVariable ObjectId myId,@RequestBody JourneyEntry req){
+        try{
+            journalEntryService.updateEntry(myId,req);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
     }
 
     @DeleteMapping("/deleteEntry/{myId}")
-    public String deleteEntry(@PathVariable ObjectId myId){
-        journalEntryService.deleteEntry(myId);
-        return "Deleted Successfully";
+    public ResponseEntity<?> deleteEntry(@PathVariable ObjectId myId){
+        try {
+            journalEntryService.deleteEntry(myId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 
 }

@@ -82,5 +82,35 @@ public class JourneyEntryController {
     // inject this repo in service and use save method to add entry
     // created Date variable too and changed datatype of variable to ObjectId so that we can parse it to findById method in Service
 
+    // RESPONSE ENTITYT : HTTP CODES
+    // HTTP code are 3 digit numerical code returned by Web server as part of the response to an HTTP request
+    // status codes are used to convey  information about resutls/requested operation
+    // grouped into 5 categories based on there first digit:
+        // 1xx Informational : indicate req was recieved and is being processed by server , used for info purposes
+        // 2xx Successfull : indicate req was recieved , and processed successfully
+            // 200 OK :processed and is returning req resource
+            // 201 Created: processed and returning new resource which was requested
+            // 204 No Content : req is successfull + no response body (used for operation that dont return data eg. deletion)
+        // 3xx Redirection : indicates that further action is required to complete the request . Used when client need to take additional steps to access req resource
+            // 301 Moved Permanently: req resource has permanently moved to a different url
+            // 302 Found : req resource has temporarily moved to a different url. When the server sends 302 it sends it includes location header field which has temp url client must redirect to
+            // 304 Not modified: if client cached resource of requested resource is still valid , so server sends 304 to indicate that client can use its cached copy
+        // 4xx Client Error : indicates error on clients part eq, malformed request, authentication issues
+            // 400 Bad Req: server cant understand/ process client req because of invalid syntax or other client issue
+            // 401 Unauthorised: client need to provide authentication credentails to access requested resource
+            // 403 Forbidden: client is authenticated but doesnt have the permission to access req resource
+        // 5xx Server Error: indicates error on server's part while trying to fulfill the req
+            // 500 Internal Server Error : generic message indicating something wrong on the server and so it couldnt handle the request
+            // 502 Bad Gateway : server acting as gateway/proxy received invalid response from upstream server
+            // 503 Service unavailble : server currenlty not able to handle req due to temporary overloading/ maintainance
+
+    // Response Entity : this class in part of Spring Framework and is commonly used to customize HTTP response
+        // it provides methods for setting response status, headers and body
+        // u can use it to return diff types of data (JSON,XML,HTML)
+        // u can use generics to specify type of data u are returning
+
+
+    // Lombok : java library, aims to reduce boilerplate code eg getter,setter
+
 
 }
