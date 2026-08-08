@@ -1,7 +1,9 @@
 package com.edigest.journalApp.controller;
 
 import com.edigest.journalApp.entity.JourneyEntry;
+import com.edigest.journalApp.entity.Users;
 import com.edigest.journalApp.service.JournalEntryService;
+import com.edigest.journalApp.service.UserService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,15 +18,16 @@ import java.util.*;
 public class JourneyEntryControllerV2 {
 
     @Autowired
-    JournalEntryService journalEntryService;
+    private JournalEntryService journalEntryService;
 
-    Map<String, JourneyEntry> journalEntries = new HashMap<String, JourneyEntry>();
+    @Autowired
+    private UserService userService;
 
-    @PostMapping("/addEntry")
-    public ResponseEntity<JourneyEntry> createEntry(@RequestBody JourneyEntry j){
+    @PostMapping("/addEntry/{username}")
+    public ResponseEntity<JourneyEntry> createEntry(@RequestBody JourneyEntry j,@PathVariable String username){
         try{
-            j.setDate(LocalDateTime.now());
-            journalEntryService.saveEntry(j);
+
+            journalEntryService.saveEntry(j,username);
             return new ResponseEntity<>(j,HttpStatus.CREATED);
 
         }catch(Exception e){
@@ -33,10 +36,12 @@ public class JourneyEntryControllerV2 {
 
     }
 
-    @GetMapping("/getAllEntries")
-    public ResponseEntity<List<JourneyEntry>> finAllEntry(){
+    @GetMapping("/getAllEntries/{username}")
+    public ResponseEntity<List<JourneyEntry>> getAllJournalEntryOfUsers(@PathVariable String username){
+        Users user = userService.findUserByUsername(username);
         try{
-            List<JourneyEntry> j = journalEntryService.getAll();
+//            List<JourneyEntry> j = journalEntryService.getAll();
+            List<JourneyEntry> j = user.getJourneyEntries();
             return  new ResponseEntity<>(j,HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

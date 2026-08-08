@@ -112,5 +112,10 @@ public class JourneyEntryController {
 
     // Lombok : java library, aims to reduce boilerplate code eg getter,setter
 
+    // User Login : 1) created User collection in Mongodb which'll store username, pwd and entries belonging to that user
+        // authentication
+            // created User bean with variable constraints like NotNull, Indexed (for fasted search, have to include auto-index-creation in application properties to enable indexing)
+            // TO LINK user(having journal entries) and journal_entries(table) we use @DBref to List<journalEntries> so that i can store reference of all journal entries in collection
+
 
 }

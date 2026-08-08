@@ -1,5 +1,6 @@
 package com.edigest.journalApp.entity;
 
+import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.annotation.Id;
