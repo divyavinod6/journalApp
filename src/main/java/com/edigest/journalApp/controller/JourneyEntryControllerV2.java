@@ -66,16 +66,16 @@ public class JourneyEntryControllerV2 {
 
     }
 
-    @PutMapping("/editEntry/{myId}")
-    public ResponseEntity<JourneyEntry> updateJournalEntry(@PathVariable ObjectId myId,@RequestBody JourneyEntry req){
-        try{
-            journalEntryService.updateEntry(myId,req);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-    }
+//    @PutMapping("/editEntry/{myId}")
+//    public ResponseEntity<JourneyEntry> updateJournalEntry(@PathVariable ObjectId myId,@RequestBody JourneyEntry req){
+//        try{
+//            journalEntryService.updateEntry(myId,req);
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        }catch (Exception e){
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//
+//    }
 
     @DeleteMapping("/deleteEntry/{myId}")
     public ResponseEntity<?> deleteEntry(@PathVariable ObjectId myId){

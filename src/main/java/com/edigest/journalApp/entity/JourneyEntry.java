@@ -1,6 +1,7 @@
 package com.edigest.journalApp.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.annotation.Id;
@@ -11,6 +12,7 @@ import java.util.Date;
 
 @Document(collection = "journal_entries")
 @Data
+@NoArgsConstructor
 public class JourneyEntry {
 
     @Id

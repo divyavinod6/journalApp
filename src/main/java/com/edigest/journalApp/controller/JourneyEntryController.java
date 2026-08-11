@@ -116,6 +116,7 @@ public class JourneyEntryController {
         // authentication
             // created User bean with variable constraints like NotNull, Indexed (for fasted search, have to include auto-index-creation in application properties to enable indexing)
             // TO LINK user(having journal entries) and journal_entries(table) we use @DBref to List<journalEntries> so that i can store reference of all journal entries in collection
+            // NOTE : put NO ARGS CONSTRUCTOR IN JOURNEY BEAN FOR DESERIALISATION (JSON TO POJO)
 
 
 }
