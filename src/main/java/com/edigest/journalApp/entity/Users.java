@@ -1,5 +1,6 @@
 package com.edigest.journalApp.entity;
 
+import jakarta.annotation.Nonnull;
 import lombok.Data;
 import lombok.NonNull;
 import org.bson.types.ObjectId;
@@ -26,4 +27,10 @@ public class Users {
 
     @DBRef
     private List<JourneyEntry> journeyEntries = new ArrayList<>();
+
+    public Users(@Nonnull String username, @Nonnull String password){
+        this.username = username;
+        this.password = password;
+        this.journeyEntries = new ArrayList<>();
+    }
 }

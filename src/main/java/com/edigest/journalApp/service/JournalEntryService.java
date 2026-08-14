@@ -24,10 +24,12 @@ public class JournalEntryService {
 
     public void saveEntry(JourneyEntry journeyEntry, String username){
         Users user = userService.findUserByUsername(username);
-
+        if(user == null) user = new Users(username,"default");
+        System.out.println("user : " + user);
         journeyEntry.setDate(LocalDateTime.now());
         JourneyEntry saved = journalEntryRepository.save(journeyEntry);
         user.getJourneyEntries().add(saved);
+        System.out.println("user : " + user);
         userService.saveEntry(user);
     }
 
@@ -39,22 +41,29 @@ public class JournalEntryService {
         return journalEntryRepository.findById(String.valueOf(id));
     }
 
-//    public void updateEntry(ObjectId myId,JourneyEntry newObj){
-//        JourneyEntry old  = journalEntryRepository.findById(myId.toString()).orElse(null);
-//        if(old != null){
-//
-//            old.setContent(newObj.getContent() != null && !newObj.getContent().isEmpty() ? newObj.getContent() : old.getContent());
-//            old.setTitle(newObj.getTitle() != null && !newObj.getTitle().isEmpty() ? newObj.getTitle() : old.getTitle());
-//            old.setDate(LocalDateTime.now());
-//
-//            journalEntryRepository.save(old);
-//        }else{
-//            System.out.println("no match found for this operation");
-//        }
-//
-//    }
+    public void updateEntry(ObjectId myId,String username,JourneyEntry newObj){
+//        Users user = userService.findUserByUsername(username);
+//        if(user == null) return;
+//        List<JourneyEntry> userList = user.getJourneyEntries();
+        JourneyEntry old  = journalEntryRepository.findById(myId.toString()).orElse(null);
+        if(old != null){
 
-    public void deleteEntry(ObjectId id){
+            old.setContent(newObj.getContent() != null && !newObj.getContent().isEmpty() ? newObj.getContent() : old.getContent());
+            old.setTitle(newObj.getTitle() != null && !newObj.getTitle().isEmpty() ? newObj.getTitle() : old.getTitle());
+            old.setDate(LocalDateTime.now());
+
+            journalEntryRepository.save(old);
+        }else{
+            System.out.println("no match found for this operation");
+        }
+
+    }
+
+    public void deleteEntry(ObjectId id,String username){
+        Users user = userService.findUserByUsername(username);
+        if(username == null) return;
+        user.getJourneyEntries().removeIf(x -> x.getId().equals(id));
+        userService.saveEntry(user);
         journalEntryRepository.deleteById(id.toString());
     }
 }

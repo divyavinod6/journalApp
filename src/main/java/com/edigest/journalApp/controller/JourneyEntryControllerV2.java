@@ -66,21 +66,21 @@ public class JourneyEntryControllerV2 {
 
     }
 
-//    @PutMapping("/editEntry/{myId}")
-//    public ResponseEntity<JourneyEntry> updateJournalEntry(@PathVariable ObjectId myId,@RequestBody JourneyEntry req){
-//        try{
-//            journalEntryService.updateEntry(myId,req);
-//            return new ResponseEntity<>(HttpStatus.OK);
-//        }catch (Exception e){
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//
-//    }
+    @PutMapping("/editEntry/{username}/{myId}")
+    public ResponseEntity<JourneyEntry> updateJournalEntry(@PathVariable ObjectId myId,String username,@RequestBody JourneyEntry req){
+        try{
+            journalEntryService.updateEntry(myId,username,req);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
-    @DeleteMapping("/deleteEntry/{myId}")
-    public ResponseEntity<?> deleteEntry(@PathVariable ObjectId myId){
+    }
+
+    @DeleteMapping("/deleteEntry/{username}/{myId}")
+    public ResponseEntity<?> deleteEntry(@PathVariable ObjectId myId,@PathVariable String username){
         try {
-            journalEntryService.deleteEntry(myId);
+            journalEntryService.deleteEntry(myId,username);
             return new ResponseEntity<>(HttpStatus.OK);
         }catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

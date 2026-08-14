@@ -117,6 +117,10 @@ public class JourneyEntryController {
             // created User bean with variable constraints like NotNull, Indexed (for fasted search, have to include auto-index-creation in application properties to enable indexing)
             // TO LINK user(having journal entries) and journal_entries(table) we use @DBref to List<journalEntries> so that i can store reference of all journal entries in collection
             // NOTE : put NO ARGS CONSTRUCTOR IN JOURNEY BEAN FOR DESERIALISATION (JSON TO POJO)
+            // CASCADE DELETE : now users and journal Entry is linked such as every user has list of journal entries and it that list ID of jounral entry
+                            //when this journal entry is deleted , we also have to delete it from its users list. This is cascade delete which happend automatically  in RDBMS but not in Mongodb
+                            // in Mongodb we have to do it manually. But when u run spring, trying to save new journal entry in user which already has non existent journal entry(coz u deleted it) , SPRING will make users journalEntry list consistent (will delete old non existent journal entry delete)
+                            // spring will make consistent in users next save entry but this wont be replicated on mongodb
 
 
 }
