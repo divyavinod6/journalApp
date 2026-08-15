@@ -26,7 +26,8 @@ public class JourneyEntryControllerV2 {
     @PostMapping("/addEntry/{username}")
     public ResponseEntity<JourneyEntry> createEntry(@RequestBody JourneyEntry j,@PathVariable String username){
         try{
-
+            System.out.println("j :" + j);
+            System.out.println("username :" + username);
             journalEntryService.saveEntry(j,username);
             return new ResponseEntity<>(j,HttpStatus.CREATED);
 

@@ -6,6 +6,7 @@ import com.edigest.journalApp.repository.JournalEntryRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,13 +23,14 @@ public class JournalEntryService {
     @Autowired
     private UserService userService;
 
+    @Transactional
     public void saveEntry(JourneyEntry journeyEntry, String username){
         Users user = userService.findUserByUsername(username);
         if(user == null) user = new Users(username,"default");
         System.out.println("user : " + user);
         journeyEntry.setDate(LocalDateTime.now());
         JourneyEntry saved = journalEntryRepository.save(journeyEntry);
-        user.getJourneyEntries().add(saved);
+        user.getJourneyEntries().add(saved); // IF ERROR HERE IT SHOULD ROLLBACK JOURNAL INSERT IN JOURNAL COLLECTION
         System.out.println("user : " + user);
         userService.saveEntry(user);
     }

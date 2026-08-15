@@ -121,6 +121,13 @@ public class JourneyEntryController {
                             //when this journal entry is deleted , we also have to delete it from its users list. This is cascade delete which happend automatically  in RDBMS but not in Mongodb
                             // in Mongodb we have to do it manually. But when u run spring, trying to save new journal entry in user which already has non existent journal entry(coz u deleted it) , SPRING will make users journalEntry list consistent (will delete old non existent journal entry delete)
                             // spring will make consistent in users next save entry but this wont be replicated on mongodb
+        // @TRANSACTIONAL helps achieve atomacity and isolation
+            // u put that on methods so spring identifies it as one unit of execution
+            // then add @EnableTransactionManagement to create Transaction context for every method call
+            // PlatformTransactionManager is the interface which manages(successfull then commit, failure then rollback) all transaction content( Ram hit api and Shyam hit api, they'll both have different transaction context)
+            // so this is completed in MongoTransactionManager(takes instance of MongoDB connection : given by MongoDatabaseFactory)
+            // NOTE: TRANSACTION is only allowed on mongodb on Replica set (we have only one instance in mongodb, so we create a replica instance/sharded cluster: adding rs0 in mongodb config file)
+
 
 
 }
