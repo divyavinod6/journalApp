@@ -28,6 +28,8 @@ public class Users {
     @DBRef
     private List<JourneyEntry> journeyEntries = new ArrayList<>();
 
+    private List<String> roles; // for authentication
+
     public Users(@Nonnull String username, @Nonnull String password){
         this.username = username;
         this.password = password;

@@ -18,6 +18,22 @@ CONTROLLER ──► SERVICE ──► REPOSITORY ──► MONGODB
 
 ### Repository Layer: Extends MongoRepository<Entity, IdType> to provide out-of-the-box CRUD operations powered by Spring Data MongoDB.
 
+
+### ORM is a technique used to map java objects to DB tables
+JPA: Java persistance api: persistance means storing permanently , api is set of rules
+so JPA is set of rules to achieve ORM
+only used with Relational DB (predefined schema)
+
+Persistance providers/ORM tools : specific implementation of the JPA specification eg: hibernate.EclipseLink and OpenJPA
+so JPA is an interface and Hibernate is its implementaion
+
+Spring JPA: build on top of JPA
+: not JPA implementation itself, it simplifies JPA by providing abstraction and utilities
+u still need JPA tool for this
+eg there's no JPA for MongoDB(NoSQl,flexible schema) so Spring Data mongodb serves as persistance provider for mongodb
+2 ways to interact with DB when using Spring Data JPA (sql) and Spring Mongodb(MongoDB) are: QUERY METHOD DSL and CRITERIA API
+(Spring Data JPA: part of spring framework, simplifies data access in java application)
+
 ### 🛠️ Key Spring MVC & Controller Concepts
 
 ## Request Inputs
@@ -114,3 +130,60 @@ Cloud Environment: Hosted on MongoDB Atlas, which provides automatic multi-node 
 
 ⚡ Additional Libraries
 Lombok: Reduces Java boilerplate code (e.g., @Data, @Getter, @Setter, @NoArgsConstructor, @AllArgsConstructor).
+
+### Spring Security
+Security Framework used in spring to handle authentication and authorisation.
+
+Authentication : process for verifying users identity (username and pwd).
+
+Authorisation : process of managing access to resources/actions bases on users role and permissions.
+
+Once this dependency is added Spring Auto Configuration will apply security features to all endpoints
+
+SpringSecurity uses HTTP basic authentication (client sends Auth header <encoded String>. Servre decodes string extracts username pwd and verifies. If correct, access grant or send 403 Unauthorised)
+If user is not created , Spring automatically creates default user with random pwd thats printed on console log while startup.
+(U can configure user and pwd in application.prop or DB)
+So now when u hit any api in controller, u have to add Auth->Basic Auth-> username: user,pwd->paste pwd from console
+(this is automatically added in Header->Auth : base64 encrypted of username:password)
+
+Customise Spring Security: u would only need this on some endpoints that too specific pwd on username
+1) create a config class, add @Configuration,@EnableWebSecurity and extends WebSecurityConfigAdapter(utility class in Spring Security frameword to customise Spring Sec)
+2) since this is depricated now, No Class Inheritance: No need to extend WebSecurityConfigurerAdapter.
+
+SecurityFilterChain Bean: Register a @Bean that takes HttpSecurity as a parameter and returns http.build().
+
+Lambda DSL & requestMatchers: Use .authorizeHttpRequests() with .requestMatchers(...) instead of the old antMatchers(...).
+
+CSRF Handling: Turn off CSRF for non-browser stateless REST APIs using .csrf(AbstractHttpConfigurer::disable).
+
+
+Spring Security also provides default Login and Logout funtionality.
+
+NOTE: BASIC AUTHENICATION BY DESIGN IS STATELESS(no history, 2nd request doesnt know anything about 1st: i entered username and pwd and got authenticated and got response, then when i try to send another req, again same proccess of auth has to be done)
+HTTP is stateless but still Spring Security manages authentication as mixed Basic Auth. It uses SESSION MANAGEMENT, this is not standard behaviour and requires additional setup and logic. Here, once user credentials are verified via Basic Auth, session is established and client is given session cookie. This way client dont have to send authorisation header with every request and server can rely on session cookie to identify auth use.
+STEPS
+1) Session Creation: after successful authentication, HTTP session is formed (auth details stored in it)
+2) Session cookie: JSESSIONID cookie(in HEADERS) is sent to client/brower, which is sent back with requests(GET,POST etc) helping the server recognise user session
+3) Security Context: using JSESSIONID Spring Sec fetched auth details for each req
+4) Session Timeout : Session have limited life, u are inactive for particular time u get logged out
+5) Logout : when loggin out, session ends and related cookie is removed
+6) Remember Me: Spring Sec can remember you even after session ends using different persistent cookie(longer lifespan)
+
+The password given by Spring in console is Admin pwd as it can be used for all users. We want to authenticate users based on there credentials stored in MongoDB
+So our users and there pwd(hashed) are stored in MongoDB, so when trying to login system should fetch pwd from db to validate
+
+#### IMPLEMENTION FOR AUTHORISATION
+1) create User entity : we already have that just add List of roles to store which role is given to user
+2) create Repo to interact with DB: already have that too
+3) UserDetailsService implementaion to fetch user details: (DOUBLE SHIFT CLICK enter UserDetailsService) its and interface which will help us find user in DB. So we create UserDetailsServiceImpl to implement this interface.
+   it has one method loadUserByUsername which returns UserDetails(bean given by this interface) thats why (   org.springframework.security.core.userdetails)User=UserDetails
+4) Create Security config class to integrate everything  : we created SpringConfig and injected UserDetailServiceImpl in it
+                  : create password encoder which returns new BCryptPasswordEncoder()
+NOTE: Legacy configure(AuthenticationManagerBuilder auth) Method: Overriding configure(...) belonged to WebSecurityConfigurerAdapter. In Spring Boot 3+, Spring Security handles UserDetailsService and PasswordEncoder wiring automatically via Dependency Injection.
+NOTE: CSRF: Cross Site Request Forgery: when enabled Spring Sec expects u to send Token in CSRF req. Since we are creating a Stateless api , we wil disable CSRF
+DEMO : 
+- Now we create updated User controller methods : user creation method saveNewUser(which will convert incoming pwd to base64 and then save to dB) is moved to Public Controller so we can create user without auth
+- update PUT mapping not to input username from url but from SECURITY CONTEXT HOLDER, by passing username ,pwd from bearer auth. This pwd then is converted to hash and compared with hash from db in method configure (in-built method in Spring Sec)
+- updated DELETE user, by getting username from Basic Auth(Security Context Holder)
+
+
