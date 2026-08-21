@@ -8,6 +8,8 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -23,10 +25,12 @@ public class JourneyEntryController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/addEntry/{username}")
-    public ResponseEntity<JourneyEntry> createEntry(@RequestBody JourneyEntry j,@PathVariable String username){
+    @PostMapping("/addEntry")
+    public ResponseEntity<JourneyEntry> createEntry(@RequestBody JourneyEntry j){
         try{
-            System.out.println("j :" + j);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username  =  authentication.getName();
+
             System.out.println("username :" + username);
             journalEntryService.saveEntry(j,username);
             return new ResponseEntity<>(j,HttpStatus.CREATED);
@@ -37,8 +41,10 @@ public class JourneyEntryController {
 
     }
 
-    @GetMapping("/getAllEntries/{username}")
-    public ResponseEntity<List<JourneyEntry>> getAllJournalEntryOfUsers(@PathVariable String username){
+    @GetMapping("/getAllEntries")
+    public ResponseEntity<List<JourneyEntry>> getAllJournalEntryOfUsers(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
         Users user = userService.findUserByUsername(username);
         try{
 //            List<JourneyEntry> j = journalEntryService.getAll();

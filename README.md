@@ -187,3 +187,6 @@ DEMO :
 - updated DELETE user, by getting username from Basic Auth(Security Context Holder)
 
 
+### IMPLEMENTING AUTHENTICATION ON JOURNAL CONTROLLER
+- updated all methods to add/get/update/delete journal entries to fetch username from SecurityContextHolder. get context() getAuthentication.getName()
+
