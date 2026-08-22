@@ -84,9 +84,9 @@ Category Overview
 
 400 Bad Request: Malformed payload or invalid client syntax.
 
-401 Unauthorized: Missing or invalid authentication credentials.
+401 Unauthorized: Missing or invalid AUTHENTICATION credentials.
 
-403 Forbidden: Authenticated, but lacks required permissions. (Not authorised)
+403 Forbidden: Authenticated, but lacks required permissions. (Not AUTHORISATION)
 
 5xx Server Error:
 
@@ -189,4 +189,5 @@ DEMO :
 
 ### IMPLEMENTING AUTHENTICATION ON JOURNAL CONTROLLER
 - updated all methods to add/get/update/delete journal entries to fetch username from SecurityContextHolder. get context() getAuthentication.getName()
+- Making sure that user A cannot get/update/delete user B
 
