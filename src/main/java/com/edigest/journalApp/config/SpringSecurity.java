@@ -29,6 +29,7 @@ public class SpringSecurity{
                 request -> request
                         .requestMatchers("/public/**").permitAll() // Public endpoints
                         .requestMatchers("/journal/**","/user/**").authenticated() // Secure endpoints
+                        .requestMatchers("/admin/**").hasRole("ADMIN") // Secure endpoints
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults()) // Enables HTTP Basic Auth (for Postman testing)
                 .csrf(AbstractHttpConfigurer::disable) // // Disable CSRF for REST APIs

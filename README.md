@@ -191,3 +191,7 @@ DEMO :
 - updated all methods to add/get/update/delete journal entries to fetch username from SecurityContextHolder. get context() getAuthentication.getName()
 - Making sure that user A cannot get/update/delete user B
 
+### IMPLEMENTING ROLE BASED AUTHORISATION
+- created Admin Controller to 1) get all users metadata 2) to create User with Role Admin (such that only Admin can create another admin user)
+- update Spring Security to have "requestMatchers("/admin/**").hasRole("ADMIN")" 
+- edit User Role from MongoDB interface to create another admin role
