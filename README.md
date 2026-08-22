@@ -195,3 +195,10 @@ DEMO :
 - created Admin Controller to 1) get all users metadata 2) to create User with Role Admin (such that only Admin can create another admin user)
 - update Spring Security to have "requestMatchers("/admin/**").hasRole("ADMIN")" 
 - edit User Role from MongoDB interface to create another admin role
+
+### YAML Properties File
+- stands for YAML Aint Markup Language
+- for JVM to fetch application properties file, classpath = src/main/resources is pre defined so we dont have to configure it, but if we change location of this file then we have to explicitly mention its file directory so JVM can pick it up
+- YAML helps use write our own configuration
+- u can also write configurations from cmd a) run using jar : cd target/ b) java -jar .\journalApp.jar --server.port=9090
+- Highest priority is given to Command Line Arguments < application.properties < yml files
