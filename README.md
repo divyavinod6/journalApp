@@ -202,3 +202,13 @@ DEMO :
 - YAML helps use write our own configuration
 - u can also write configurations from cmd a) run using jar : cd target/ b) java -jar .\journalApp.jar --server.port=9090
 - Highest priority is given to Command Line Arguments < application.properties < yml files
+
+### Junit Testing
+- two types of testing 1) Unit testing 2) Integration Testing
+- Unit testing : individual components/methods are tested which are part of api
+- Integration Testing : 
+- Steps:
+  - 1) add dependecy in pom : spring-boot-starter-test (which already has junit dependency)
+  - 2) add @SpringBootTest to boot the application so it can autowire your classes that u are testing
+  - 3) used @ParameterizedTest , @CsvSource to pass series of values as arguments to method call
+  - 4) used @Disable to disable testing over method
