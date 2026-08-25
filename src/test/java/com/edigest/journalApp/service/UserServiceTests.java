@@ -5,7 +5,9 @@ import com.edigest.journalApp.repository.UsersRepository;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -17,15 +19,19 @@ public class UserServiceTests {
     @Autowired
     private UsersRepository usersRepository;
 
-    @Test
-    @Disabled
-    public void testFindByUsername(){
-        Users user  = usersRepository.findByUsername("Divya");
-        assertNotNull(user);
-        assertEquals(4,2+2);
-        assertTrue(user.getJourneyEntries().isEmpty());
+    @Autowired
+    private UserService userService;
+
+    @ParameterizedTest
+    @ArgumentsSource(UserArgumentProvider.class)
+    public void testFindByUsername(Users user){
+//        Users user  = usersRepository.findByUsername(username);
+//        assertNotNull(user,"failed for : " +username);
+//        assertEquals(4,2+2);
+        assertTrue(userService.saveNewUser(user));
     }
 
+    @Disabled
     @ParameterizedTest
     @CsvSource({
             "1,1,2",

@@ -210,5 +210,9 @@ DEMO :
 - Steps:
   - 1) add dependecy in pom : spring-boot-starter-test (which already has junit dependency)
   - 2) add @SpringBootTest to boot the application so it can autowire your classes that u are testing
-  - 3) used @ParameterizedTest , @CsvSource to pass series of values as arguments to method call
-  - 4) used @Disable to disable testing over method
+  - 3) @Test on methods to annotate that this is a test method and not helper method
+  - 4) used @ParameterizedTest , @CsvSource/@ValueSource(to mention datatype of value pass)/@ArgumentSource(to pass custom parameter) to pass series of values as arguments to method call
+  - 5) used @Disable to disable testing over method
+  - 6) @BeforeEach : used on methods to setup/load method codes before every test. Runs everytime each test method is run
+  - 7) @BeforeAll: used on methods to setup/load code once before testing begins.
+  - 8) @AfterEach: and @AfterAll methods work the same
