@@ -236,4 +236,20 @@ DEMO :
 - When u want to know which environment is set u can
   ConfigurableApplicationContext context = SpringApplication.run(JournalApplication.class, args);
   System.out.println(context.getEnvironment());
-- 
+
+### LOGGING : used to monitor and troubleshoot issues
+- Spring provides : Logback(defualt in SpringB apps), Log4j2(need asynchronous logging+ various output formats), Java Util Logging (JUL)(default logging frameword included in Java Std Edition)
+- @Slf4j(is logging abstraction framework: SIMPLE LOGGING FASSAD FOR JAVA), @Log4j2 : Spring provides inject logger instances into your classses
+- Logback :
+  - default configuration is embeded within springboot libraries(may not be visible)
+  - logback.xml : to customise logging confirmation
+  - Loggin Levels: categorise logs based on severity levels
+    - TRACE > DEBUG > INFO > WARN > ERROR
+    - NOTE : BY DEFUALT WARN,ERROR AND INFO ARE PRINTED , NOT TRACE AND DEBUG(enable them in property files/yml)
+    - make your Logger logger = LoggerFactory.getLogger PRIVATE STATIC FINAL 
+    - @Slf4j : to avoid writing Logger logger on every class u can use this lombok annotation (replace logger. with log.)
+  - logback.xml file : usually where log config are written
+    - appender: where logs will be printed
+    - encoder: specify which format u want logs to print
+    - RollingAppender: to generate new file after paritcular event
+      - maxHistory: 10 means if logs file became > 10 , delete oldest one
