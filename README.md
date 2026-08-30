@@ -216,3 +216,24 @@ DEMO :
   - 6) @BeforeEach : used on methods to setup/load method codes before every test. Runs everytime each test method is run
   - 7) @BeforeAll: used on methods to setup/load code once before testing begins.
   - 8) @AfterEach: and @AfterAll methods work the same
+
+### MOKITO
+    - since we connect to DB, repositories, instead of actually connecting to DB MOkito helps in mocking the connection
+    - remove @SpringBootTest as we dont want to boot entire spring context so to mock it we use @InjectMock on all dependencies u want to @Autowire
+    - when u use @SpringBootTest+@Autowire in test u have to annotate other dependency u add as @MockBean(part of spring context)
+    - when u remove these two and add @InjectMock(class u want to test) u can update dependencies with @Mock(part of Mokito: classes used in this class which u would need to mock)
+    - @InjectMock injects dependency automatically but @Mock doesnt inject like @Autowire so u need to @BeforeAll and initiate all Mock methods {void setUp(){ MokitoAnnotation.initMocks(this)}} ;
+
+### SPRING BOOT PROFILES
+- we can toggle between application-dev and application-prod using spring-profile-active = dev/prod
+- so when u work u can have 2 property files (dev and prod) and then set "Edit configurations" in Intellij (ONLY FOR DEV AS PROD WONT WORK ON LOCAL MACHINE)
+- and when u are building jar in PROD server u can use CMD COMMMANDS
+  -  .\mvnw clean package -Dspring.profiles.active=prod or ./mvnw clean package "-Dspring.profiles.active=dev" (// Passing -Dspring.profiles.active=dev during ./mvnw clean package sets the active profile only while Maven executes unit and integration tests during the build It SETS JVM CONFIG "-D" TO BUILD THIS JAR WITH PROD DETAILS EG.RUN TEST CASES USING PROD CREDENTIALS AS WE HAVE USED @SPRINGBOOTTEST which loads spring context)
+  - java -jar .\target\journalApp.jar --spring.profiles.active=prod (// WE ARE PASSING ARGUMENTS WITH --... TO RUN JAVA APPLICATION , you want to run the compiled JAR file with the dev/prod profile active, pass it to java -jar
+- Mostly JENKINS is used to set these profiles/ run commands for prod jar build 
+- we can also set which Bean/Class to Load based on profile using @Profile("dev")/@Profile("prod")
+- similarly we can use @ActivePriofiles("dev) on test classes 
+- When u want to know which environment is set u can
+  ConfigurableApplicationContext context = SpringApplication.run(JournalApplication.class, args);
+  System.out.println(context.getEnvironment());
+- 

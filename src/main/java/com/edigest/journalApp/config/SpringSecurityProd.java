@@ -19,8 +19,8 @@ import javax.swing.text.PasswordView;
 
 @Configuration
 @EnableWebSecurity
-@Profile("dev")
-public class SpringSecurity{
+@Profile("prod")
+public class SpringSecurityProd{
 
     @Autowired
     private UserDetailsService userDetailsService; // no need as this is automatically autowired
@@ -28,11 +28,8 @@ public class SpringSecurity{
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http.authorizeHttpRequests(
-                request -> request
-                        .requestMatchers("/public/**").permitAll() // Public endpoints
-                        .requestMatchers("/journal/**","/user/**").authenticated() // Secure endpoints
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // Secure endpoints
-                        .anyRequest().authenticated())
+                        request -> request
+                                .anyRequest().authenticated()) // ALL REQ NEED AUTHENTICATION
                 .httpBasic(Customizer.withDefaults()) // Enables HTTP Basic Auth (for Postman testing)
                 .csrf(AbstractHttpConfigurer::disable) // // Disable CSRF for REST APIs
                 .build();
