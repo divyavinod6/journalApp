@@ -1,8 +1,10 @@
 package com.edigest.journalApp.controller;
 
 
+import com.edigest.journalApp.api.response.WeatherResponse;
 import com.edigest.journalApp.entity.Users;
 import com.edigest.journalApp.service.UserService;
+import com.edigest.journalApp.service.WeatherService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private WeatherService weatherService;
 
 
     @GetMapping("/getAllUsers")
@@ -61,5 +66,18 @@ public class UserController {
         String username = authentication.getName();
         userService.deleteByUsername(username);
         return "User deleted successfully";
+    }
+
+    @GetMapping("/getGreetings")
+    public ResponseEntity<?> getGreetings(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username  =auth.getName();
+        WeatherResponse weather = weatherService.getWeather("MUMBAI");
+        if(weather!= null){
+            return new ResponseEntity<>("Hi! "+ username + " weather is "  + weather.getCurrent().getTemperature() + "`C",HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Hi! "+ username,HttpStatus.OK);
+
+
     }
 }

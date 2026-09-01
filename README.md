@@ -260,3 +260,11 @@ DEMO :
 - ./mvnw clea install sonar:sonar
   - SonarLint : downloaded in IDE to warn you suggestions which could be flagged in SonarQube
   - SonarCloud: instead of downloading sonarqube u could just add your project on SonarCloud provided your code mush be on GitHub
+
+### INTEGRATING EXTERNAL API
+- API KEY: for authentication and get API URL
+- RestTemplate :class helps us process Http request restTemplate.exchange(URL, HTTP METHOD, HEADER, RESPONSE ENTITY)
+- JSON TO POJO(DESERIALISATION): we are receiving json from weather api so we will convert it into POJO using online converter (Root is varibls in json in root directory)
+  - if u change varible name in POJO then u have to tell JVM which json feild to map to this POJO variable using @JsonProperty("input_json_key")
+- REST TEMPLATE : when u autowire RestTemplate u also need to write implementation so that Spring can create its instance and inject it(here we added as @Bean in main config)
+- URI BUILDER : use uri builder to format your url to avoid String replace error
