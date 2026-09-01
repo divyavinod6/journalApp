@@ -253,3 +253,10 @@ DEMO :
     - encoder: specify which format u want logs to print
     - RollingAppender: to generate new file after paritcular event
       - maxHistory: 10 means if logs file became > 10 , delete oldest one
+
+### SONARQUBE
+- installed SonarQube 7.9 LTS
+- add plugin in pom
+- ./mvnw clea install sonar:sonar
+  - SonarLint : downloaded in IDE to warn you suggestions which could be flagged in SonarQube
+  - SonarCloud: instead of downloading sonarqube u could just add your project on SonarCloud provided your code mush be on GitHub
