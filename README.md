@@ -263,8 +263,12 @@ DEMO :
 
 ### INTEGRATING EXTERNAL API
 - API KEY: for authentication and get API URL
-- RestTemplate :class helps us process Http request restTemplate.exchange(URL, HTTP METHOD, HEADER, RESPONSE ENTITY)
+- RestTemplate :class helps us process Http request restTemplate.exchange(URL, HTTP METHOD, HEADER, REQUEST ENTITY, RESPONSE ENTITY)
 - JSON TO POJO(DESERIALISATION): we are receiving json from weather api so we will convert it into POJO using online converter (Root is varibls in json in root directory)
-  - if u change varible name in POJO then u have to tell JVM which json feild to map to this POJO variable using @JsonProperty("input_json_key")
+  - if u change varible name in POJO then u have to tell JVM which json field to map to this POJO variable using @JsonProperty("input_json_key")
 - REST TEMPLATE : when u autowire RestTemplate u also need to write implementation so that Spring can create its instance and inject it(here we added as @Bean in main config)
-- URI BUILDER : use uri builder to format your url to avoid String replace error
+- URI BUILDER : use uri builder to format your url to avoid String replace error(queryParam,toUriString)
+- Http Headers: to set headers
+- HttpEntity : to wrap headers and send as request entity
+- ResponseEntity: to collect api response from method restTemplate.exchange(@URL,@HTTPMETHOD.GET, @REQ ENTITY, @RES ENTITY (ALWAYS .CLASS))
+- return responseEntity.getBody (so this whole method will have return type of Response body POJO)

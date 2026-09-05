@@ -1,8 +1,10 @@
 package com.edigest.journalApp.controller;
 
 
+import com.edigest.journalApp.api.response.QuoteResponse;
 import com.edigest.journalApp.api.response.WeatherResponse;
 import com.edigest.journalApp.entity.Users;
+import com.edigest.journalApp.service.QuotesService;
 import com.edigest.journalApp.service.UserService;
 import com.edigest.journalApp.service.WeatherService;
 import org.bson.types.ObjectId;
@@ -26,6 +28,9 @@ public class UserController {
 
     @Autowired
     private WeatherService weatherService;
+
+    @Autowired
+    private QuotesService quotesService;
 
 
     @GetMapping("/getAllUsers")
@@ -73,8 +78,12 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username  =auth.getName();
         WeatherResponse weather = weatherService.getWeather("MUMBAI");
+        QuoteResponse quoteResponse = quotesService.getQuoteMethod();
         if(weather!= null){
-            return new ResponseEntity<>("Hi! "+ username + " weather is "  + weather.getCurrent().getTemperature() + "`C",HttpStatus.OK);
+//            return new ResponseEntity<>("Hi! "+ username + " weather is "  + weather.getCurrent().getTemperature() + "`C" +
+//                    "/n Quote of the day is "+ quotesService.getQuoteMethod().getQuote() ,HttpStatus.OK);
+            return new ResponseEntity<>("Hi! "+ username +
+                    " Quote of the day is "+ quoteResponse.getQuote() ,HttpStatus.OK);
         }
         return new ResponseEntity<>("Hi! "+ username,HttpStatus.OK);
 
