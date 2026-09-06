@@ -80,10 +80,9 @@ public class UserController {
         WeatherResponse weather = weatherService.getWeather("MUMBAI");
         QuoteResponse quoteResponse = quotesService.getQuoteMethod();
         if(weather!= null){
-//            return new ResponseEntity<>("Hi! "+ username + " weather is "  + weather.getCurrent().getTemperature() + "`C" +
-//                    "/n Quote of the day is "+ quotesService.getQuoteMethod().getQuote() ,HttpStatus.OK);
-            return new ResponseEntity<>("Hi! "+ username +
-                    " Quote of the day is "+ quoteResponse.getQuote() ,HttpStatus.OK);
+            return new ResponseEntity<>("Hi! "+ username + " weather is "  + weather.getCurrent().getTemperature() + "`C",HttpStatus.OK);
+//            return new ResponseEntity<>("Hi! "+ username +
+//                    " Quote of the day is "+ quoteResponse.getQuote() ,HttpStatus.OK);
         }
         return new ResponseEntity<>("Hi! "+ username,HttpStatus.OK);
 

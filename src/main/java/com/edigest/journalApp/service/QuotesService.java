@@ -2,6 +2,7 @@ package com.edigest.journalApp.service;
 
 import com.edigest.journalApp.api.response.QuoteResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -13,7 +14,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Service
 public class QuotesService {
 
-    private static String apikey = "8rjYI8LfM0WwYv0P28bGgWGoAaiUF6QbBfnMRyjU";
+    @Value("${quotes.api.key}")
+    private String apiKey;
+
+//    private static String apikey = "8rjYI8LfM0WwYv0P28bGgWGoAaiUF6QbBfnMRyjU";
     private static String apiUrl = "https://api.api-ninjas.com/v2/quotes?categories=success%2Cwisdom";
 
     @Autowired
@@ -25,7 +29,7 @@ public class QuotesService {
             String url = UriComponentsBuilder.fromHttpUrl(apiUrl).toUriString();
             // set Headers using HttpHeaders
             HttpHeaders header = new HttpHeaders();
-            header.set("X-Api-Key",apikey);
+            header.set("X-Api-Key",apiKey);
             // wrap header in Http Entity
             HttpEntity<String> entity = new HttpEntity<>(header);
             // making api call using response entity

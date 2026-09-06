@@ -14,3 +14,11 @@ server:
 logging:
   level:
     com.edigest.jounrnalApp: DEBUG
+
+quotes:
+  api:
+    key: 8rjYI8LfM0WwYv0P28bGgWGoAaiUF6QbBfnMRyjU
+
+weather:
+  api:
+    key: fdf9f1383ad287fe13bb5ab01fd43214

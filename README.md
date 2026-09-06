@@ -272,3 +272,78 @@ DEMO :
 - HttpEntity : to wrap headers and send as request entity
 - ResponseEntity: to collect api response from method restTemplate.exchange(@URL,@HTTPMETHOD.GET, @REQ ENTITY, @RES ENTITY (ALWAYS .CLASS))
 - return responseEntity.getBody (so this whole method will have return type of Response body POJO)
+
+### Key Spring Boot & Java Annotations
+####  Core Spring Framework Stereotypes
+
+| Annotation | Purpose | Best Used For |
+| :--- | :--- | :--- |
+| **`@Component`** | Generic stereotype indicating a class is a Spring-managed bean. | General-purpose utility classes or components outside standard layers. |
+| **`@Service`** | Specialization of `@Component` for business logic components. | Service layer classes (e.g., `UserService`, `QuotesService`) managing transactions. |
+| **`@Repository`** | Marks Data Access Objects (DAOs) and enables automatic exception translation. | Database repositories and custom DAO implementations. |
+| **`@Controller`** | Handles standard Spring MVC web requests returning views. | Server-side rendered web pages (e.g., Thymeleaf/JSP). |
+| **`@RestController`** | Combines `@Controller` and `@ResponseBody` to serialize return values to JSON/XML. | Building RESTful web APIs returning raw payload data. |
+
+---
+
+#### Dependency Injection & Configuration
+
+| Annotation | Purpose | Best Used For |
+| :--- | :--- | :--- |
+| **`@Autowired`** | Tells Spring to inject a dependent bean automatically by type. | Injecting dependencies into constructors, setters, or fields. |
+| **`@Qualifier("beanName")`** | Resolves ambiguity when multiple beans of the same type exist. | Specifying the exact bean to inject alongside `@Autowired`. |
+| **`@Configuration`** | Marks a class as a source of Spring bean definitions. | Centralizing factory methods for external libraries. |
+| **`@Bean`** | Declares a method that returns a Spring-managed bean. | Registering third-party instances (e.g., `RestTemplate`, `PasswordEncoder`). |
+| **`@Value("${key}")`** | Injects property values from `application.yml` or environment variables. | Injecting dynamic settings, secrets, and API keys. |
+| **`@Profile("env")`** | Conditionally registers components based on the active profile. | Separating `dev`, `test`, and `prod` bean configurations. |
+
+---
+
+#### Spring Web / REST Endpoints
+
+| Annotation | HTTP Method | Usage Example |
+| :--- | :--- | :--- |
+| **`@GetMapping`** | `GET` | `@GetMapping("/users")` |
+| **`@PostMapping`** | `POST` | `@PostMapping("/users")` |
+| **`@PutMapping`** | `PUT` | `@PutMapping("/users/{id}")` |
+| **`@DeleteMapping`** | `DELETE` | `@DeleteMapping("/users/{id}")` |
+| **`@RequestBody`** | N/A | Binds HTTP request payload JSON directly to a Java DTO. |
+| **`@PathVariable`** | N/A | Extracts dynamic URI segment values (e.g., `/users/{id}`). |
+| **`@RequestParam`** | N/A | Extracts query parameters from the URL string (e.g., `?city=Mumbai`). |
+
+---
+
+#### Lombok Utilities
+
+| Annotation | Description |
+| :--- | :--- |
+| **`@Getter` / `@Setter`** | Automatically generates getter and setter methods at build time. |
+| **`@NoArgsConstructor`** | Generates a default public constructor with no arguments. |
+| **`@AllArgsConstructor`** | Generates a constructor requiring an argument for every class field. |
+| **`@Builder`** | Implements the Builder Design Pattern for clean object creation. |
+| **`@Slf4j`** | Injects an SLF4J `Logger` instance named `log` into the class automatically. |
+
+---
+
+#### Persistence & Transactions
+
+| Annotation | Purpose |
+| :--- | :--- |
+| **`@Transactional`** | Wraps method execution inside a managed database transaction. |
+| **`@Document`** | Marks a Java class as a MongoDB document mapping. |
+| **`@Entity`** | Marks a Java class as a relational JPA table mapping. |
+| **`@Id`** | Designates a class field as the primary key of a document or entity. |
+
+### @VALUE
+- to fetch details from application properties 
+- IMP: dont make its varibles static (As static varible belong to Class and not instances so when Spring boots up it loads all instances but doesnt interfere with Static variables as they are shared among instance so if you store @Value in static variable then it may not load app properties into it)
+
+### FREQUENCY CACHE with @POSTCONSTRUCT
+- Postconstruct is used when u want to load data as soon as spring gets booted up
+- we can store frequenlty used and frequently changing configurations(eg api urls) in DB and then load this DB in application cache
+- STEPS:
+  - 1) created new collection in same DB to store key:value for api url
+  - 2) if u integrate it now just as it is in the WeatherService everytime api is called it fetches url from mongodb connection
+  - 3) to avoid this latency we create AppCache as @Component + @PostConstruct on init() method to initialise all values from api collection ONCE and keep it ready for consumption 
+  - NOTE: Initialisation is imp for non-primitive data objects since they are null by default
+  - 4) if U dont want to use @PostConstruct u can also create an endpoint api and hit it to call app.init() method so u dont have to restart to load any changes done in Cache values u can just hit this external api again

@@ -34,3 +34,8 @@ build/
 
 # Ignore local environment config
 src/main/resources/application-dev.yml
+
+
+# Ignore log files
+*.log
+logs/

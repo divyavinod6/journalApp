@@ -1,8 +1,10 @@
 package com.edigest.journalApp.service;
 
 import com.edigest.journalApp.api.response.WeatherResponse;
+import com.edigest.journalApp.cache.AppCache;
 import com.edigest.journalApp.entity.Users;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -16,19 +18,24 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class WeatherService {
 
-    private static String apikey = "fdf9f1383ad287fe13bb5ab01fd43214";
+    @Autowired
+    private AppCache appCache;
+
+    @Value("${weather.api.key}")
+    private String apiKey;
+
 //    private static String apiUrl = "http://api.weatherstack.com/current?access_key=API_KEY&query=CITY";
-    private static String apiUrl = "http://api.weatherstack.com/current";
+//    private static String apiUrl = "http://api.weatherstack.com/current";
 
     @Autowired
     private RestTemplate restTemplate;
 
     public WeatherResponse getWeather(String city){
-        String url = apiUrl.replace("API_KEY",apikey).replace("CITY",city);
-//        String url = UriComponentsBuilder.fromHttpUrl(apiUrl)
-//                .queryParam("access_key",apikey)
-//                .queryParam("CITY",city)
-//                .toString();
+//        String url = apiUrl.replace("API_KEY",apikey).replace("CITY",city);
+        String url = UriComponentsBuilder.fromHttpUrl(appCache.APPCACHEMAP.get("weather_api"))
+                .queryParam("access_key",apiKey)
+                .queryParam("query",city)
+                .toUriString();
 
         ResponseEntity<WeatherResponse> response = restTemplate.exchange(url, HttpMethod.GET,null, WeatherResponse.class);
 
@@ -37,6 +44,7 @@ public class WeatherService {
     }
 
     // TO SEND POST REQUEST TO EXTERNAL API
+    /*
     public WeatherResponse getWeatherPost(String city){
 //        String url = apiUrl.replace("API_KEY",apikey).replace("CITY",city);
         String url = UriComponentsBuilder.fromHttpUrl(apiUrl)
@@ -55,6 +63,6 @@ public class WeatherService {
         return response.getBody();
 
     }
-
+    */
 
 }
