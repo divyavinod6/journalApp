@@ -27,6 +27,9 @@ public class Users {
     @NonNull
     private String password;
 
+    private String email;
+    private boolean sentimentalAnalysis;
+
     @DBRef
     private List<JourneyEntry> journeyEntries = new ArrayList<>();
 

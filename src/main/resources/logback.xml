@@ -13,7 +13,7 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- Active log rolls per minute/hour/day with index %i -->
             <fileNamePattern>journalApp-%d{yyyy-MM-dd-HH-mm}.%i.log</fileNamePattern>
-            <maxFileSize>10MB</maxFileSize>
+            <maxFileSize>20MB</maxFileSize>
             <maxHistory>10</maxHistory>
         </rollingPolicy>
 

@@ -57,6 +57,13 @@ eg there's no JPA for MongoDB(NoSQl,flexible schema) so Spring Data mongodb serv
    @DeleteMapping("/deleteEntry/{id}")
    public String deleteEntry(@PathVariable ObjectId id) { ... }
 
+## Mongo Template
+- we extends our repository to MongoRepository to create methods like findByUsername which can automatically return us User from username (QUERY METHOD DSL)
+- QUERY METHOD DSL : springboot makes query at runtime if methods are named using correct nomenclature
+- for complex queries: use CRITERIA
+    - created UserRepositoryImpl: we want email for all users whose sentiment analysis is true. For this complex query we will build CRITERIA
+    - inject MongoTemplate so we can interact with mongodb
+
 ## 🌐 HTTP Status Codes & ResponseEntity
 
 ResponseEntity is used across controllers to explicitly control the HTTP status code, headers, and body returned to the client.
