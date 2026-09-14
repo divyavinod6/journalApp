@@ -360,3 +360,10 @@ DEMO :
 - JavaMailSender : interface to inherit
 - add spring:mail settings in application.yml to configure JavaMailSender bean
 - use SimpleMailMessage to set to email, body and subject line
+
+### SCHEDULED CRON JOBS
+- just add @EnableScheduling over class and @Scheduled(cron ="") over method
+- Important Rules for @Scheduled Methods
+  - Return Type: The method must have a void return type.
+  - Arguments: The method must not accept any parameters.
+  - Spring Bean: The class containing the @Scheduled method must be a Spring Bean (annotated with @Component, @Service, etc.).

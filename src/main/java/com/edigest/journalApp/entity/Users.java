@@ -1,5 +1,6 @@
 package com.edigest.journalApp.entity;
 
+import com.edigest.journalApp.enumPack.Sentiment;
 import jakarta.annotation.Nonnull;
 import lombok.*;
 import org.bson.types.ObjectId;
@@ -28,7 +29,7 @@ public class Users {
     private String password;
 
     private String email;
-    private boolean sentimentalAnalysis;
+    private Sentiment sentimentalAnalysis;
 
     @DBRef
     private List<JourneyEntry> journeyEntries = new ArrayList<>();
