@@ -5,6 +5,17 @@ spring:
     mongodb:
       auto-index-creation : true
       uri : mongodb+srv://thisisdivyavinod_db_user:HhX25324zpaVvQ7W@cluster0.g0sxxf8.mongodb.net/journaldb?retryWrites=true&w=majority&appName=Cluster0
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: magicdivya5@gmail.com
+    password: venf ubze hubl meul
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+              enable: true
 
 server:
   port: 8081

@@ -354,3 +354,9 @@ DEMO :
   - 3) to avoid this latency we create AppCache as @Component + @PostConstruct on init() method to initialise all values from api collection ONCE and keep it ready for consumption 
   - NOTE: Initialisation is imp for non-primitive data objects since they are null by default
   - 4) if U dont want to use @PostConstruct u can also create an endpoint api and hit it to call app.init() method so u dont have to restart to load any changes done in Cache values u can just hit this external api again
+
+### GMAIL SMTP
+- Add dependency in pom: springboot started mail
+- JavaMailSender : interface to inherit
+- add spring:mail settings in application.yml to configure JavaMailSender bean
+- use SimpleMailMessage to set to email, body and subject line

@@ -11,10 +11,11 @@
         <file>journalApp.log</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <!-- Active log rolls per minute/hour/day with index %i -->
-            <fileNamePattern>journalApp-%d{yyyy-MM-dd-HH-mm}.%i.log</fileNamePattern>
+            <!-- Rotates daily OR whenever size hits 20MB (adds index .0, .1, etc.) -->
+            <fileNamePattern>journalApp-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <maxFileSize>20MB</maxFileSize>
             <maxHistory>10</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>
 
         <encoder>
