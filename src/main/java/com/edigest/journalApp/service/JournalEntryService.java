@@ -58,6 +58,7 @@ public class JournalEntryService {
 
             old.setContent(newObj.getContent() != null && !newObj.getContent().isEmpty() ? newObj.getContent() : old.getContent());
             old.setTitle(newObj.getTitle() != null && !newObj.getTitle().isEmpty() ? newObj.getTitle() : old.getTitle());
+            old.setSentiment(newObj.getSentiment() != null && !newObj.getSentiment().describeConstable().isEmpty() ? newObj.getSentiment() : old.getSentiment());
             old.setDate(LocalDateTime.now());
 
             journalEntryRepository.save(old);

@@ -1,5 +1,6 @@
 package com.edigest.journalApp.entity;
 
+import com.edigest.journalApp.enumPack.Sentiment;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
@@ -20,6 +21,7 @@ public class JourneyEntry {
     private String title;
     private String content;
     private LocalDateTime date;
+    private Sentiment sentiment = null;
 
 
 

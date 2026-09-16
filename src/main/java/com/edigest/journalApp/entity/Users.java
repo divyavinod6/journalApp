@@ -29,7 +29,7 @@ public class Users {
     private String password;
 
     private String email;
-    private Sentiment sentimentalAnalysis;
+    private boolean sentimentalAnalysis;
 
     @DBRef
     private List<JourneyEntry> journeyEntries = new ArrayList<>();

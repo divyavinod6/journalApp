@@ -20,7 +20,7 @@ public class UserRepositoryImpl {
         Criteria criteria = new Criteria();
         query.addCriteria(criteria.andOperator(
                 Criteria.where("sentimentalAnalysis").is(true),
-                Criteria.where("email").exists(true).ne("")// ne = not equal
+                Criteria.where("email").exists(true).ne(null)// ne = not equal
         ));
 
         List<Users> users = mongoTemplate.find(query, Users.class);
