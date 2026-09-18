@@ -367,3 +367,10 @@ DEMO :
   - Return Type: The method must have a void return type.
   - Arguments: The method must not accept any parameters.
   - Spring Bean: The class containing the @Scheduled method must be a Spring Bean (annotated with @Component, @Service, etc.).
+
+### INTEGRATING REDIS
+1) Add dependency in pom
+2) install Redis using wsl
+3) add spring.redis.host and port in application properties
+4) NOTE: serialisation and deserialisation is different in Spring and Redis so redis cli and spring will not be storing consistent data until WE SET SERIALISATION AND DESERIALISATION IN BEAN OF REDIS TEMPLATE
+5) For RedisConfig : we would create Bean for RedisTemplate passing RedisConnectionFactory (interface to get and manage connection with RedisDB) and set key value serialisation with string value

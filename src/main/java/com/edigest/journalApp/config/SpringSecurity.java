@@ -24,7 +24,7 @@ import javax.swing.text.PasswordView;
 public class SpringSecurity{
 
     @Autowired
-    private UserDetailsService userDetailsService; // no need as this is automatically autowired
+    private UserDetailsService userDetailsService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
