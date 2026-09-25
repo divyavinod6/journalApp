@@ -374,3 +374,26 @@ DEMO :
 3) add spring.redis.host and port in application properties
 4) NOTE: serialisation and deserialisation is different in Spring and Redis so redis cli and spring will not be storing consistent data until WE SET SERIALISATION AND DESERIALISATION IN BEAN OF REDIS TEMPLATE
 5) For RedisConfig : we would create Bean for RedisTemplate passing RedisConnectionFactory (interface to get and manage connection with RedisDB) and set key value serialisation with string value
+6) Redis returns values as JSON String mostly so set values as JSON String using ObjectMapper
+7) if u pass ttl as negetive Cache wont expire ever
+
+### INTGERATING KAFKA
+#### THEORY
+1) Kafka is open source 
+2) Kafka cluster is a group of kafka servers/ kafka brokers
+3) Producer creates data and pushes it in topics(similar to tables), from where Consumer picks it up. Eg Instagram has like count module as producer and notification system as consumer so kafka sits in between to store, manaage and analys continuos data flow
+4) Topics have partitions (like one table has 1-100 rows as 1 partition , 101-200 as 2nd partition)
+5) Each partitions has offset key which is like primary key and data is stored in order in every partition
+6) Data is stored in Round Robin fashion in all partitions eg P1 then P2 then P3 etc, but if u want ordered data storage u have to store data in key value pair so values of one key will go in P1 another one will go in P2 etc
+7) But partitions 1 is independent from partition 2, so likes on data stored about foods in one partition, data stored about weather in another partition
+8) Actual data is stored in log files on Kafka server. It also has retention policy stating how long and how much size of data should be stored in logs before its discarded
+9) If there are more than one Consumer then which consumer is assigned to which partition is handed by Consumer Manager
+10) all consumers store there progress (till where they have consumed in that particular partiion) in a table __consumer_offset, so even if one consumer goes down we have a track on till where data is consumed
+#### PRATICAL
+0) add Kafka dependency in pom
+1) make free account on Confluent kafka
+2) in free default cluster create topics and configure client
+3) when configuring client u will get api code
+4) Create Consumer Service: add @KafkaListener(topic="tpoic_name",group_id="group_name") on a method so that it continously searches for data to sent to kafka
+
+

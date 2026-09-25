@@ -19,6 +19,32 @@ spring:
           auth: true
           starttls:
               enable: true
+  kafka:
+    bootstrap-servers: pkc-41p56.asia-south1.gcp.confluent.cloud:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: weekly-sentiment-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: com.edigest.journalApp.model
+    properties:
+      security:
+        protocol: SASL_SSL
+      sasl:
+        mechanism: PLAIN
+        jaas:
+          config: org.apache.kafka.common.security.plain.PlainLoginModule required username='BSSVFOEVAALCMRRM' password='cfltduaEotNrQ80s6iSUJug4ytOQJWzELEhsrQE3JSLYYsxBSVEsz72DfVkyEqTA';
+      session:
+        timeout:
+          ms: 45000
+      client:
+        id: ccloud-springboot-client-130c9f18-6552-46d9-ae2b-a999e44ef380
 
 server:
   port: 8081
