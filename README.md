@@ -396,4 +396,5 @@ DEMO :
 3) when configuring client u will get api code
 4) Create Consumer Service: add @KafkaListener(topic="tpoic_name",group_id="group_name") on a method so that it continously searches for data to sent to kafka
 
-
+### HOSTING ON HEROKU SERVER
+1) 

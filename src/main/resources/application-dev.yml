@@ -1,26 +1,26 @@
 spring:
   application:
-    name  : journalApp
+    name: journalApp
   data:
     mongodb:
-      auto-index-creation : true
-      uri : mongodb+srv://thisisdivyavinod_db_user:HhX25324zpaVvQ7W@cluster0.g0sxxf8.mongodb.net/journaldb?retryWrites=true&w=majority&appName=Cluster0
+      auto-index-creation: true
+      uri: ${MONGO_URI}
   redis:
-    host: localhost
-    port: 6379
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
   mail:
     host: smtp.gmail.com
     port: 587
-    username: thisisdivyavinod@gmail.com
-    password: xxx xxx xxx xxx
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
     properties:
       mail:
         smtp:
           auth: true
           starttls:
-              enable: true
+            enable: true
   kafka:
-    bootstrap-servers: pkc-41p56.asia-south1.gcp.confluent.cloud:9092
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
@@ -39,7 +39,7 @@ spring:
       sasl:
         mechanism: PLAIN
         jaas:
-          config: org.apache.kafka.common.security.plain.PlainLoginModule required username='BSSVFOEVAALCMRRM' password='cfltduaEotNrQ80s6iSUJug4ytOQJWzELEhsrQE3JSLYYsxBSVEsz72DfVkyEqTA';
+          config: org.apache.kafka.common.security.plain.PlainLoginModule required username='${KAFKA_API_KEY}' password='${KAFKA_API_SECRET}';
       session:
         timeout:
           ms: 45000
@@ -55,8 +55,8 @@ logging:
 
 quotes:
   api:
-    key: 8rjYI8LfM0WwYv0P28bGgWGoAaiUF6QbBfnMRyjU
+    key: ${QUOTES_API_KEY}
 
 weather:
   api:
-    key: fdf9f1383ad287fe13bb5ab01fd43214
+    key: ${WEATHER_API_KEY}
