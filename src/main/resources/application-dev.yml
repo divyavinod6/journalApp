@@ -5,9 +5,9 @@ spring:
     mongodb:
       auto-index-creation: true
       uri: ${MONGO_URI}
-  redis:
-    host: ${REDIS_HOST:localhost}
-    port: ${REDIS_PORT:6379}
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
   mail:
     host: smtp.gmail.com
     port: 587
@@ -51,7 +51,7 @@ server:
 
 logging:
   level:
-    com.edigest.jounrnalApp: DEBUG
+    com.edigest.journalApp: DEBUG
 
 quotes:
   api:
