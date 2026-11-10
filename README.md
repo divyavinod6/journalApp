@@ -396,5 +396,13 @@ DEMO :
 3) when configuring client u will get api code
 4) Create Consumer Service: add @KafkaListener(topic="tpoic_name",group_id="group_name") on a method so that it continously searches for data to sent to kafka
 
-### HOSTING ON HEROKU SERVER
-1) 
+### HOSTING ON RENDER SERVER
+1) Added Environment variables from application-dev on IDE
+2) created DockerFile
+3) connected Github Repo to render
+4) SUCCESSFULLY HOSTED : https://journal-app-zx5m.onrender.com/public/health-check
+
+### SWAGGER : used for documentation of apis
+- OpenAPI Specifications: defines a standardise format for describing APIS comprehensly
+- Swagger,Springdoc Open API(for spring 3) :  are tools to implement openAPI specifications
+- SPRINGFOX is Java library used to integrate Swagger, it automatically generates Swagger documentation from controller and model
