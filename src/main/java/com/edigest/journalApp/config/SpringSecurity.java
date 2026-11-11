@@ -30,9 +30,10 @@ public class SpringSecurity{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http.authorizeHttpRequests(
                 request -> request
-                        .requestMatchers("/public/**").permitAll() // Public endpoints
-                        .requestMatchers("/journal/**","/user/**").authenticated() // Secure endpoints
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // Secure endpoints
+                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/journal/**", "/user/**").authenticated()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults()) // Enables HTTP Basic Auth (for Postman testing)
                 .csrf(AbstractHttpConfigurer::disable) // // Disable CSRF for REST APIs

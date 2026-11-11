@@ -406,3 +406,6 @@ DEMO :
 - OpenAPI Specifications: defines a standardise format for describing APIS comprehensly
 - Swagger,Springdoc Open API(for spring 3) :  are tools to implement openAPI specifications
 - SPRINGFOX is Java library used to integrate Swagger, it automatically generates Swagger documentation from controller and model
+- just adding springdoc dependency and then going to http://localhost:8081/swagger-ui/index.html to get documentation : It scans application for RESt controllers, it also scans classes used in as request/response bodies
+- /v3/api-docs endpoint provides JSON representation of api documentation which can be used by swagger ui to generate interactive API doc
+- created SwaggerConfig for customisation : Remember to use DTO/POJO (no bussiness logic written) than beans/entity so that swagger documentation can pick the controller paramenters properly without exposing business logic

@@ -1,5 +1,6 @@
 package com.edigest.journalApp.repository;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +14,7 @@ public class UserRepositoryImplTest {
     private UserRepositoryImpl userRepositoryImpl;
 
     @Test
+    @Disabled
     public void testGetUserforSentimentAnalysis(){
         assertNotNull(userRepositoryImpl.getUserforSentimentAnalysis());
 

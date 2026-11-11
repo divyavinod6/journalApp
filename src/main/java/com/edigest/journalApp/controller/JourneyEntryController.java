@@ -4,6 +4,7 @@ import com.edigest.journalApp.entity.JourneyEntry;
 import com.edigest.journalApp.entity.Users;
 import com.edigest.journalApp.service.JournalEntryService;
 import com.edigest.journalApp.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/journal")
+@Tag(name = "Journal Entry APIs")
 public class JourneyEntryController {
 
     @Autowired
@@ -60,15 +62,16 @@ public class JourneyEntryController {
     // PathVariable is when input is along api url eg journal/getEntry/id/2
     // Request Parameter is when input is with ? in url/Params eg journal/getEntry/id?id=2
     @GetMapping("/getEntry/id/{myId}")
-    public ResponseEntity<JourneyEntry> getEntry(@PathVariable ObjectId myId){
+    public ResponseEntity<JourneyEntry> getEntry(@PathVariable String myId){
+        ObjectId objectId = new ObjectId(myId);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName(); //  we get user trying to view myID journal entry
         // we fetch all journal entries corresponding this username and filter in it to find journal entry with myId
         List<JourneyEntry> journeyEntryList = userService.findUserByUsername(username).getJourneyEntries().stream()
-                .filter(x -> x.getId().equals(myId)).collect(Collectors.toList());
+                .filter(x -> x.getId().equals(objectId)).collect(Collectors.toList());
 
         if(!journeyEntryList.isEmpty()){
-            Optional<JourneyEntry> obj = journalEntryService.getEntryById(myId);
+            Optional<JourneyEntry> obj = journalEntryService.getEntryById(objectId);
             if(obj.isPresent()){
                 return new ResponseEntity<>(obj.get(),HttpStatus.OK);
             }else{

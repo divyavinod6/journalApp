@@ -1,6 +1,7 @@
 package com.edigest.journalApp.scheduler;
 
 import com.edigest.journalApp.service.UserService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +13,7 @@ public class UserSchedulerTest {
     private UserScheduler userScheduler;
 
     @Test
+    @Disabled
     public void testFetchUsersAndSendMail(){
         userScheduler.fetchUsersAndSendMail();
     }

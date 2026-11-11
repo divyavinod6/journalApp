@@ -7,6 +7,8 @@ import com.edigest.journalApp.entity.Users;
 import com.edigest.journalApp.service.QuotesService;
 import com.edigest.journalApp.service.UserService;
 import com.edigest.journalApp.service.WeatherService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@Tag(name = "User APIs", description = "Read Update and Delete user")
 public class UserController {
 
     @Autowired
@@ -35,11 +38,13 @@ public class UserController {
 
 
     @GetMapping("/getAllUsers")
+    @Operation(summary = "Get all journal entries of user")
     public List<Users> getAllUsers(){
         return userService.getAll();
     }
 
     @GetMapping("/getUser/id/{myId}")
+    @Operation(summary = "Get all journal entries of user using id")
     public Users getUserById(@PathVariable ObjectId myId){
         return userService.getEntryById(myId).orElse(null);
     }
@@ -55,6 +60,7 @@ public class UserController {
 
 
     @PutMapping("/updateUser")
+    @Operation(summary = "Update user entry using id")
     public ResponseEntity<?> updateUser(@RequestBody Users user){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -67,6 +73,7 @@ public class UserController {
     }
 
     @DeleteMapping("/deleteUser")
+    @Operation(summary = "Delete user using id")
     public String deleteUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // only delete user after its authenticated
         String username = authentication.getName();
@@ -75,6 +82,7 @@ public class UserController {
     }
 
     @GetMapping("/getGreetings")
+    @Operation(summary = "Get greetings for user")
     public ResponseEntity<?> getGreetings(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username  =auth.getName();
